@@ -1,7 +1,5 @@
-//global.THREE = require('three')
+global.THREE = require('three')
 
-import Renderer from './Core/Renderer';
-import Camera from './Core/Camera';
 import Scene from './Core/Scene';
 
 
@@ -21,19 +19,21 @@ class App {
     const container = document.getElementById('container');
 
     const video = document.createElement('video');
-    container.appendChild(video);
+    //container.appendChild(video);
 
     // Renderer
     const renderer = new THREE.WebGLRenderer({
       alpha: true,
-      antialias: true
+      antialias: true,
+      sortObjects: false,
+      autoClearColor: 0x000000
     });
+    renderer.setSize(VIDEO_WIDHT, VIDEO_HEIGHT)
     container.appendChild(renderer.domElement);
 
     // Camera
-    //const camera = new THREE.Camera() //Camera(75, window.innerWidth / window.innerHeight, 0.1, 10000);
     const camera = new THREE.PerspectiveCamera(75, VIDEO_WIDHT, VIDEO_HEIGHT, 1, 10000);
-    camera.matrixAutoUpdate = false;
+    //camera.matrixAutoUpdate = false;
 
     var hdConstraints = {
       audio: false,
@@ -63,7 +63,7 @@ class App {
         renderer.setSize(VIDEO_WIDHT, VIDEO_HEIGHT);
 
         var cameraMatrix = arController.getCameraMatrix();
-        camera.projectionMatrix.elements.set(cameraMatrix);
+        //camera.projectionMatrix.elements.set(cameraMatrix);
 
         // Scene
         const scene = new Scene(renderer, camera, arController, video);

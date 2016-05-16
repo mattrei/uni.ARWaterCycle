@@ -2,8 +2,9 @@ global.THREE = require('three')
 import raf from 'raf-loop';
 import Clock from '../Helpers/Clock';
 import Cube from '../Cube';
-import Sea from '../Sea';
-import PostProcessing from '../PostProcessing/PostProcessing';
+import Sea from '../Sea'
+import Steam from '../Steam'
+//import PostProcessing from '../PostProcessing/PostProcessing';
 
 /*
 import {
@@ -41,7 +42,7 @@ class Scene extends THREE.Scene {
     this.objects = []
 
     this.createScene()
-    this.createDemoText()
+    //this.createDemoText()
 
     document.addEventListener('mousedown', (e) => this.onDocumentMouseDown(e), false);
   }
@@ -54,15 +55,13 @@ class Scene extends THREE.Scene {
     mouse.x = (event.clientX / VIDEO_WIDHT) * 2 - 1;
     mouse.y = -(event.clientY / VIDEO_HEIGHT) * 2 + 1;
 
-    console.log(mouse)
-    console.log(this.markerRoot.position)
-
     this.raycaster.setFromCamera(mouse, this.camera)
     var intersects = this.raycaster.intersectObjects(this.objects);
     if (intersects.length > 0) {
       const SELECTED = intersects[0].object;
-      SELECTED.scale.multiplyScalar(2)
       console.log(SELECTED)
+      SELECTED.scale.multiplyScalar(1.2)
+
     }
   }
 
@@ -70,6 +69,13 @@ class Scene extends THREE.Scene {
    * CreateScene function
    */
   createScene() {
+
+
+    var gridHelper = new THREE.GridHelper( 10, 1);
+    this.add( gridHelper );
+    var axisHelper = new THREE.AxisHelper( 5 );
+    this.add( axisHelper );
+    this.add(new THREE.CameraHelper(this.camera))
 
     // create the marker Root
     this.markerRoot = new THREE.Object3D();
@@ -81,19 +87,21 @@ class Scene extends THREE.Scene {
 
     this.cube = new Cube();
     //this.markerRoot.add(this.cube);
+    this.add(this.cube)
+  //  this.cube.position.set(new THREE.Vector3(1, 1,1))
 
 
-    this.cube2 = new Cube();
-    //this.markerRoot.add(this.cube2);
-    this.cube2.position.sub(new THREE.Vector3(10, 0, 0))
+    //this.sea = new Sea()
+    //this.markerRoot.add(this.sea)
+    //this.add(this.sea)
 
-    this.sea = new Sea()
-    this.markerRoot.add(this.sea)
+    //this.steam = new Steam()
+    //this.markerRoot.add(this.steam)
+    //this.add(this.steam)
 
-    this.objects.push(this.sea)
-    this.objects.push(this.markerRoot)
-    this.objects.push(this.cube)
-    this.objects.push(this.cube2)
+    //this.objects.push(this.sea)
+    //this.objects.push(this.steam)
+    //this.objects.push(this.cube)
 
     this.raf = raf(::this.render).start();
   }
@@ -145,10 +153,12 @@ class Scene extends THREE.Scene {
     this.cube.rotation.x += 0.01;
     this.cube.rotation.y += 0.02;
 
-    this.cube.update(this.clock.time);
+    this.cube.update ( this.clock.time)
+    //this.sea.update(this.clock.time)
+//    this.steam.update(this.clock.time)
 
 
-    this.updateAR()
+    //this.updateAR()
 
     this.renderer.render(this, this.camera)
   }

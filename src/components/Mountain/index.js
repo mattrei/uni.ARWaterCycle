@@ -1,15 +1,16 @@
-import CloudGeometry from './CloudGeometry'
-import CloudMaterial from './CloudMaterial'
+import THREE from 'three'
 
-const tweenr = require('tweenr')
+import MountainGeometry from './MountainGeometry'
+import MountainMaterial from './MountainMaterial'
 
-class Cloud extends THREE.Mesh {
+
+class Mountain extends THREE.Mesh {
 
   /**
    * Constructor function
    */
   constructor() {
-    super(new CloudGeometry(), new CloudMaterial({wireframe: false}))
+    super(new MountainGeometry(), new MountainMaterial({wireframe: false}))
   }
 
   /**
@@ -19,12 +20,6 @@ class Cloud extends THREE.Mesh {
   update( time ) {
     //this.material.update( time );
   }
-
-  grow() {
-
-    // scale and rotation
-
-  }
 }
 
-export default Cloud;
+export default Mountain;

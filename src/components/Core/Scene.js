@@ -5,7 +5,7 @@ import Cube from '../Cube';
 import Sea from '../Sea'
 import Steam from '../Steam'
 import Cloud from '../Cloud'
-//import PostProcessing from '../PostProcessing/PostProcessing';
+import Mountain from '../Mountain'
 
 /*
 import {
@@ -74,8 +74,8 @@ class Scene extends THREE.Scene {
   createLight() {
 
     const dirLight = new THREE.DirectionalLight( 0xffffff, 1 );
-    				dirLight.color.setHSL( 0.1, 1, 0.95 );
-    				dirLight.position.set( -1, 1.75, 1 );
+    dirLight.color.setHSL( 0.1, 1, 0.95 );
+    dirLight.position.set( SCENE_WIDTH, SCENE_HEIGHT, 1 );
     				//dirLight.position.multiplyScalar( 50 );
     				this.add( dirLight );
 
@@ -121,6 +121,9 @@ class Scene extends THREE.Scene {
     this.cloud.position.x = SCENE_WIDTH
     this.cloud.position.y = SCENE_HEIGHT
     this.cloud.grow(0.1, 4)
+
+    this.mountain = new Mountain()
+    this.add(this.mountain)
 
     //this.objects.push(this.sea)
     //this.objects.push(this.steam)

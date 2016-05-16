@@ -6,19 +6,19 @@ const randomInt = require('random-int')
 /**
  * CubeGeometry class
  */
-class CloudGeometry extends THREE.SphereGeometry {
+class CloudGeometry extends THREE.TetrahedronGeometry {
 
   /**
    * Constructor function
    */
   constructor() {
-    super(6 + Math.floor(Math.random() * 12), 8, 8);
+    super(1, 2)
 
-    for (var i = 0; i < sphereGeom.vertices.length; i++) {
-      var vertex = sphereGeom.vertices[i];
-      vertex.y += random(-2, 2)
-      vertex.x += random(-1.5, 1.5)
-      vertex.z += random(-1.5, 1.5)
+    for (var i = 0; i < this.vertices.length; i++) {
+      var vertex = this.vertices[i];
+      vertex.x += simplex.noise2D(vertex.y * 0.2, vertex.z * 0.1)
+      vertex.y += simplex.noise2D(vertex.x * 0.1, vertex.z * 0.5)
+      vertex.z += simplex.noise2D(vertex.x * 0.5, vertex.y * 0.1)
     }
 
     this.computeFaceNormals();

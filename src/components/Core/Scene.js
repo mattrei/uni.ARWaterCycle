@@ -4,6 +4,7 @@ import Clock from '../Helpers/Clock';
 import Cube from '../Cube';
 import Sea from '../Sea'
 import Steam from '../Steam'
+import Cloud from '../Cloud'
 //import PostProcessing from '../PostProcessing/PostProcessing';
 
 /*
@@ -12,6 +13,10 @@ import {
   Text2D
 } from 'three-text2d'
 */
+
+// from origin point - and +
+const SCENE_WIDTH = 5
+const SCENE_HEIGHT = 5
 
 const VIDEO_WIDHT = 640
 const VIDEO_HEIGHT = 480
@@ -98,7 +103,7 @@ class Scene extends THREE.Scene {
 
     this.cube = new Cube();
     //this.markerRoot.add(this.cube);
-    this.add(this.cube)
+  //  this.add(this.cube)
   //  this.cube.position.set(new THREE.Vector3(1, 1,1))
 
 
@@ -109,6 +114,13 @@ class Scene extends THREE.Scene {
     this.steam = new Steam()
     //this.markerRoot.add(this.steam)
     this.add(this.steam)
+
+    this.cloud = new Cloud()
+    //this.markerRoot.add(this.cloud)
+    this.add(this.cloud)
+    this.cloud.position.x = SCENE_WIDTH
+    this.cloud.position.y = SCENE_HEIGHT
+    this.cloud.grow(0.1, 4)
 
     //this.objects.push(this.sea)
     //this.objects.push(this.steam)

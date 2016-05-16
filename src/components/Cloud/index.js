@@ -1,7 +1,9 @@
+import THREE from 'three'
+
 import CloudGeometry from './CloudGeometry'
 import CloudMaterial from './CloudMaterial'
 
-const tweenr = require('tweenr')
+const tweenr = require('tweenr')()
 
 class Cloud extends THREE.Mesh {
 
@@ -10,6 +12,7 @@ class Cloud extends THREE.Mesh {
    */
   constructor() {
     super(new CloudGeometry(), new CloudMaterial({wireframe: false}))
+    //this.scale.set(new THREE.Vector3(1, 1, 1))
   }
 
   /**
@@ -20,10 +23,18 @@ class Cloud extends THREE.Mesh {
     //this.material.update( time );
   }
 
-  grow() {
+  grow(factor, duration) {
 
-    // scale and rotation
+    
+    const origScale = new THREE.Vector3()
+    origScale.copy(this.scale)
 
+    tweenr.to(this.scale, {
+      x: origScale.x * factor,
+      y: origScale.y * factor,
+      z: origScale.z * factor,
+      duration: duration
+    })
   }
 }
 

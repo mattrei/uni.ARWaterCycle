@@ -1,8 +1,16 @@
-import THREE from 'three';
+global.THREE = require('three')
 import raf from 'raf-loop';
 import Clock from '../Helpers/Clock';
 import Cube from '../Cube';
+import Sea from '../Sea';
 import PostProcessing from '../PostProcessing/PostProcessing';
+
+/*
+import {
+  textAlign,
+  Text2D
+} from 'three-text2d'
+*/
 
 const VIDEO_WIDHT = 640
 const VIDEO_HEIGHT = 480
@@ -32,7 +40,8 @@ class Scene extends THREE.Scene {
 
     this.objects = []
 
-    this.createScene();
+    this.createScene()
+    this.createDemoText()
 
     document.addEventListener('mousedown', (e) => this.onDocumentMouseDown(e), false);
   }
@@ -46,84 +55,126 @@ class Scene extends THREE.Scene {
     mouse.y = -(event.clientY / VIDEO_HEIGHT) * 2 + 1;
 
     console.log(mouse)
+    console.log(this.markerRoot.position)
 
     this.raycaster.setFromCamera(mouse, this.camera)
     var intersects = this.raycaster.intersectObjects(this.objects);
     if (intersects.length > 0) {
       const SELECTED = intersects[0].object;
+      SELECTED.scale.multiplyScalar(2)
       console.log(SELECTED)
+    }
+  }
+
+  /**
+   * CreateScene function
+   */
+  createScene() {
+
+    // create the marker Root
+    this.markerRoot = new THREE.Object3D();
+    this.markerRoot.markerMatrix = new Float64Array(12);
+    this.markerRoot.matrixAutoUpdate = false;
+    this.markerRoot.visible = false
+    this.add(this.markerRoot);
+
+
+    this.cube = new Cube();
+    //this.markerRoot.add(this.cube);
+
+
+    this.cube2 = new Cube();
+    //this.markerRoot.add(this.cube2);
+    this.cube2.position.sub(new THREE.Vector3(10, 0, 0))
+
+    this.sea = new Sea()
+    this.markerRoot.add(this.sea)
+
+    this.objects.push(this.sea)
+    this.objects.push(this.markerRoot)
+    this.objects.push(this.cube)
+    this.objects.push(this.cube2)
+
+    this.raf = raf(::this.render).start();
+  }
+
+
+  createDemoText() {
+
+    var loader = new THREE.FontLoader();
+    const fontName = 'helvetiker',
+      fontWeight = 'regular'
+
+    const text = 'CLICKED ME!',
+      size = 0.5
+
+    loader.load('../fonts/' + fontName + '_' + fontWeight + '.typeface.js', (font) => {
+
       /*
-      var intersects = raycaster.intersectObject(plane);
-      if (intersects.length > 0) {
-        offset.copy(intersects[0].point).sub(plane.position);
-      }
-      container.style.cursor = 'move';
+          const textGeo = new THREE.TextGeometry( text, {
+        					font: font,
+        					size: size
+        				});
+        				//textGeo.computeBoundingBox();
+        				//textGeo.computeVertexNormals();
+
+          const material = new THREE.MeshNormalMaterial()
+
+          const textMesh = new THREE.Mesh( textGeo, material );
+
+          this.markerRoot.add(textMesh)
+          */
+
+/*
+      var text = new Text2D("RIGHT", {
+        align: new THREE.Vector2(-1, 0),
+        font: '30px Arial',
+        fillStyle: '#000000',
+        antialias: true
+      })
+      this.markerRoot.add(text)
       */
+    })
+  }
+
+  /**
+   * Render function
+   */
+  render() {
+
+    this.cube.rotation.x += 0.01;
+    this.cube.rotation.y += 0.02;
+
+    this.cube.update(this.clock.time);
+
+
+    this.updateAR()
+
+    this.renderer.render(this, this.camera)
+  }
+
+  updateAR() {
+    if (!this.arController) return;
+
+    this.arController.detectMarker(this.video);
+    this.arController.debugDraw();
+    // update markerRoot with the found markers
+    var markerNum = this.arController.getMarkerNum();
+    if (markerNum > 0) {
+      if (this.markerRoot.visible === false) {
+        this.arController.getTransMatSquare(0 /* Marker index */ , 1 /* Marker width */ , this.markerRoot.markerMatrix);
+      } else {
+        this.arController.getTransMatSquareCont(0, 1, this.markerRoot.markerMatrix, this.markerRoot.markerMatrix);
+      }
+      this.arController.transMatToGLMat(this.markerRoot.markerMatrix, this.markerRoot.matrix.elements);
     }
-}
-
-/**
- * CreateScene function
- */
-createScene() {
-
-  // create the marker Root
-  this.markerRoot = new THREE.Object3D();
-  this.markerRoot.markerMatrix = new Float64Array(12);
-  this.markerRoot.matrixAutoUpdate = false;
-  this.markerRoot.visible = false
-  this.add(this.markerRoot);
-
-
-  this.cube = new Cube();
-  this.markerRoot.add(this.cube);
-
-
-  this.objects.push( this.markerRoot )
-  this.objects.push( this.cube )
-
-  this.raf = raf(::this.render).start();
-}
-
-/**
- * Render function
- */
-render() {
-
-  this.cube.rotation.x += 0.01;
-  this.cube.rotation.y += 0.02;
-
-  this.cube.update(this.clock.time);
-
-
-  this.updateAR()
-
-  this.renderer.render(this, this.camera)
-}
-
-updateAR() {
-  if (!this.arController) return;
-
-  this.arController.detectMarker(this.video);
-  this.arController.debugDraw();
-  // update markerRoot with the found markers
-  var markerNum = this.arController.getMarkerNum();
-  if (markerNum > 0) {
-    if (this.markerRoot.visible === false) {
-      this.arController.getTransMatSquare(0 /* Marker index */ , 1 /* Marker width */ , this.markerRoot.markerMatrix);
+    // objects visible IIF there is a marker
+    if (markerNum > 0) {
+      this.markerRoot.visible = true;
     } else {
-      this.arController.getTransMatSquareCont(0, 1, this.markerRoot.markerMatrix, this.markerRoot.markerMatrix);
+      this.markerRoot.visible = false;
     }
-    this.arController.transMatToGLMat(this.markerRoot.markerMatrix, this.markerRoot.matrix.elements);
   }
-  // objects visible IIF there is a marker
-  if (markerNum > 0) {
-    //console.log("vis " + markerNum)
-    this.markerRoot.visible = true;
-  } else {
-    this.markerRoot.visible = false;
-  }
-}
 }
 
 export default Scene;

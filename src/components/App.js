@@ -1,4 +1,4 @@
-import THREE from 'three'
+//global.THREE = require('three')
 
 import Renderer from './Core/Renderer';
 import Camera from './Core/Camera';
@@ -57,17 +57,17 @@ class App {
 
       const cameraParameters = new ARCameraParam();
       cameraParameters.onload = function() {
-        arController = new ARController( VIDEO_WIDHT, VIDEO_HEIGHT, cameraParameters);
+        arController = new ARController(VIDEO_WIDHT, VIDEO_HEIGHT, cameraParameters);
         arController.debugSetup();
 
-        renderer.setSize( VIDEO_WIDHT, VIDEO_HEIGHT );
+        renderer.setSize(VIDEO_WIDHT, VIDEO_HEIGHT);
 
         var cameraMatrix = arController.getCameraMatrix();
         camera.projectionMatrix.elements.set(cameraMatrix);
 
-
         // Scene
         const scene = new Scene(renderer, camera, arController, video);
+
       };
 
       cameraParameters.load('./camera_para.dat');
@@ -77,6 +77,7 @@ class App {
     });
 
   }
+
 }
 
 export default App;

@@ -1,4 +1,3 @@
-import THREE from 'three';
 import Window from '../Events/Window';
 
 /**

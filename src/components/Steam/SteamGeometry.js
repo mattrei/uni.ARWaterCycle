@@ -3,9 +3,10 @@ const simplex = new(require('simplex-noise'))
 const random = require('random-float')
 const randomInt = require('random-int')
 
-import Mover from '../Helpers/Mover'
+import NewtonParticle from '../Helpers/NewtonParticle'
 
-const NUM_MOVERS = 50
+const NUM_MOVERS = 10
+const MAX_HEIGHT = 4
 
 /**
  * CubeGeometry class
@@ -18,9 +19,9 @@ class SteamGeometry extends THREE.BufferGeometry {
   constructor() {
     super();
 
-    this.gravity = new THREE.Vector3(0, 0.1, 0)
+    this.gravity = new THREE.Vector3(0, 0.0001, 0)
 
-    this.movers = []
+    this.particles = []
     this.points = new THREE.Object3D()
 
     this.positions = new Float32Array(NUM_MOVERS * 3)
@@ -30,24 +31,24 @@ class SteamGeometry extends THREE.BufferGeometry {
 
     for (var i = 0; i < NUM_MOVERS; i++) {
 
-      const mover = new Mover()
+      const mover = new NewtonParticle()
 
       var h = randomInt(0, 45);
       var s = randomInt(60, 90);
       var color = new THREE.Color('hsl(' + h + ', ' + s + '%, 50%)');
 
-      mover.init(new THREE.Vector3(randomInt(-10, 10), 0, 0));
-      mover.is_active = true
-      mover.a = 1
+      mover.setVelocity(new THREE.Vector3(random(-0.1, 0.1), 0, 0))
+      mover.setAcceleration(new THREE.Vector3(0, random(0.0001, 0.001), 0))
+      mover.setSize(random(0.1, 1))
 
-      this.movers.push(mover);
-      this.positions[i * 3 + 0] = mover.position.x;
-      this.positions[i * 3 + 1] = mover.position.y;
-      this.positions[i * 3 + 2] = mover.position.z;
+      this.particles.push(mover);
+      this.positions[i * 3 + 0] = mover.getPosition().x;
+      this.positions[i * 3 + 1] = mover.getPosition().y;
+      this.positions[i * 3 + 2] = mover.getPosition().z;
       color.toArray(this.colors, i * 3);
 
-      this.opacities[i] = mover.a;
-      this.sizes[i] = mover.size;
+      this.opacities[i] = mover.getAlpha()
+      this.sizes[i] = mover.getSize()
     }
 
     this.addAttribute('position', new THREE.BufferAttribute(this.positions, 3));
@@ -73,33 +74,27 @@ class SteamGeometry extends THREE.BufferGeometry {
   updateMover() {
 
 
-     for (var i = 0; i < this.movers.length; i++) {
-       var mover = this.movers[i];
-       if (mover.is_active) {
-         mover.time++;
-         mover.applyForce(this.gravity);
-         mover.applyDrag(0.01);
+     for (var i = 0; i < this.particles.length; i++) {
+       var mover = this.particles[i];
+       if (mover.getActive()) {
+
          mover.updateVelocity();
          mover.updatePosition();
-         mover.position.sub(this.points.position);
-         if (mover.time > 50) {
-           mover.size -= 0.7;
-           mover.a -= 0.009;
-         }
-         if (mover.a <= 0) {
-           mover.init(new THREE.Vector3(0, 0, 0));
-           mover.time = 0;
-           mover.a = 0.0;
-           mover.inactivate();
+         mover.getPosition().sub(this.points.position);
+
+         this.positions[i * 3 + 0] = mover.getPosition().x - this.points.position.x;
+         this.positions[i * 3 + 1] = mover.getPosition().y - this.points.position.y;
+         this.positions[i * 3 + 2] = mover.getPosition().z - this.points.position.z;
+         this.opacities[i] = mover.getAlpha()
+         this.sizes[i] = mover.getSize()
+
+         if (mover.getPosition().y >= MAX_HEIGHT) {
+           mover.setActive(false)
          }
        }
-       this.positions[i * 3 + 0] = mover.position.x - this.points.position.x;
-       this.positions[i * 3 + 1] = mover.position.y - this.points.position.y;
-       this.positions[i * 3 + 2] = mover.position.z - this.points.position.z;
-       this.opacities[i] = mover.a;
-       this.sizes[i] = mover.size;
      }
    }
+
 }
 
 export default SteamGeometry;

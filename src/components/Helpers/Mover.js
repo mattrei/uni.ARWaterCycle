@@ -7,11 +7,11 @@ class Mover extends Force3 {
     this.time = 0;
     this.is_active = false;
   };
-  init(vector) {
+  init(vector, accleration) {
     this.position = vector.clone();
     this.velocity = vector.clone();
     this.anchor = vector.clone();
-    this.acceleration.set(0, 0, 0);
+    this.acceleration = accleration.clone()
     this.time = 0;
   };
   activate() {

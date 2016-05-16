@@ -44,7 +44,7 @@ class Scene extends THREE.Scene {
     this.createScene()
     //this.createDemoText()
 
-    document.addEventListener('mousedown', (e) => this.onDocumentMouseDown(e), false);
+    //document.addEventListener('mousedown', (e) => this.onDocumentMouseDown(e), false);
   }
 
   onDocumentMouseDown(event) {
@@ -72,8 +72,8 @@ class Scene extends THREE.Scene {
 
 
     var gridHelper = new THREE.GridHelper( 10, 1);
-    this.add( gridHelper );
-    var axisHelper = new THREE.AxisHelper( 5 );
+    this.add( gridHelper);
+    var axisHelper = new THREE.AxisHelper( 50 );
     this.add( axisHelper );
     this.add(new THREE.CameraHelper(this.camera))
 
@@ -91,13 +91,13 @@ class Scene extends THREE.Scene {
   //  this.cube.position.set(new THREE.Vector3(1, 1,1))
 
 
-    //this.sea = new Sea()
+    this.sea = new Sea()
     //this.markerRoot.add(this.sea)
     //this.add(this.sea)
 
-    //this.steam = new Steam()
+    this.steam = new Steam()
     //this.markerRoot.add(this.steam)
-    //this.add(this.steam)
+    this.add(this.steam)
 
     //this.objects.push(this.sea)
     //this.objects.push(this.steam)
@@ -154,8 +154,8 @@ class Scene extends THREE.Scene {
     this.cube.rotation.y += 0.02;
 
     this.cube.update ( this.clock.time)
-    //this.sea.update(this.clock.time)
-//    this.steam.update(this.clock.time)
+    this.sea.update(this.clock.time)
+    this.steam.update(this.clock.time)
 
 
     //this.updateAR()

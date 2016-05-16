@@ -22,9 +22,11 @@ class SteamMaterial extends THREE.ShaderMaterial {
     this.depthWrite = false
     this.blending = THREE.AdditiveBlending
 
+    const texture = this.createTexture()
+
     this.uniforms = {
       color: { type: 'c', value: new THREE.Color(0xffffff) },
-      texture: { type: 't', value: this.createTexture() }
+      texture: { type: 't', value: texture }
     }
   }
 

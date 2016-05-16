@@ -13,6 +13,7 @@ class SeaMaterial extends THREE.MeshBasicMaterial {
   constructor( options ) {
     super( options );
 
+    this.side = THREE.DoubleSide
     this.vertexColors = THREE.VertexColors
     this.transparent = true
     this.shading = THREE.FlatShading

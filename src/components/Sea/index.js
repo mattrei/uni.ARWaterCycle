@@ -13,7 +13,7 @@ class Sea extends THREE.Mesh {
    * Constructor function
    */
   constructor() {
-    super( new SeaGeometry(), new SeaMaterialShader({ wireframe: false }) );
+    super( new SeaGeometry(), new SeaMaterial({ wireframe: false }) );
   }
 
   /**
@@ -21,7 +21,7 @@ class Sea extends THREE.Mesh {
    * @param {number} time Time
    */
   update( time ) {
-    //this.geometry.update( time )
+    this.geometry.update( time )
     this.material.update( time );
   }
 

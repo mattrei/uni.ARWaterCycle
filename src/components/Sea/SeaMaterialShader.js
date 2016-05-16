@@ -13,7 +13,9 @@ class SeaMaterial extends THREE.ShaderMaterial {
   constructor( options ) {
     super( options );
 
-    this.transparent = true,
+    this.transparent = true
+
+    this.side = THREE.DoubleSide
 
     this.vertexShader = glslify( './shader/vert.glsl' );
     this.fragmentShader = glslify( './shader/frag.glsl' );

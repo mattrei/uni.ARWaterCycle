@@ -1,6 +1,7 @@
 global.THREE = require('three')
 
 import Scene from './Core/Scene';
+const OrbitControls = require('three-orbit-controls')(THREE)
 
 
 const VIDEO_WIDHT = 640
@@ -25,15 +26,17 @@ class App {
     const renderer = new THREE.WebGLRenderer({
       alpha: true,
       antialias: true,
-      sortObjects: false,
-      autoClearColor: 0x000000
+      sortObjects: false
     });
     renderer.setSize(VIDEO_WIDHT, VIDEO_HEIGHT)
     container.appendChild(renderer.domElement);
 
     // Camera
-    const camera = new THREE.PerspectiveCamera(75, VIDEO_WIDHT, VIDEO_HEIGHT, 1, 10000);
+    const camera = new THREE.PerspectiveCamera(50, VIDEO_WIDHT / VIDEO_HEIGHT, 1, 1000)
+    camera.position.set(0, 0, -10)
+    camera.lookAt(new THREE.Vector3())
     //camera.matrixAutoUpdate = false;
+    const controls = new OrbitControls(camera)
 
     var hdConstraints = {
       audio: false,
@@ -47,6 +50,7 @@ class App {
 
     let arController = null
 
+/*
     navigator.getUserMedia(hdConstraints, stream => {
 
       video.src = window.URL.createObjectURL(stream);
@@ -64,10 +68,10 @@ class App {
 
         var cameraMatrix = arController.getCameraMatrix();
         //camera.projectionMatrix.elements.set(cameraMatrix);
-
+*/
         // Scene
         const scene = new Scene(renderer, camera, arController, video);
-
+/*
       };
 
       cameraParameters.load('./camera_para.dat');
@@ -75,6 +79,7 @@ class App {
     }, e => {
       console.log("Can't access user media", e);
     });
+    */
 
   }
 

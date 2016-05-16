@@ -12,7 +12,7 @@ class Steam extends THREE.Points {
    * Constructor function
    */
   constructor() {
-    super(new SteamGeometry(), new SteamMaterial({
+    super(new SteamGeometry(),new SteamMaterial({
       wireframe: false
     }));
   }

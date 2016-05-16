@@ -4,7 +4,7 @@ const glslify = require('glslify');
 /**
  * CubeMaterial class
  */
-class SeaMaterial extends THREE.MeshStandardMaterial {
+class MountainMaterial extends THREE.MeshStandardMaterial {
 
   /**
    * Constructor function
@@ -13,13 +13,10 @@ class SeaMaterial extends THREE.MeshStandardMaterial {
   constructor( options ) {
     super( options );
 
-    this.side = THREE.DoubleSide
-    //this.vertexColors = THREE.VertexColors
-    this.transparent = true
     this.shading = THREE.FlatShading
-    this.color = new THREE.Color(0x006994)
-
-
+    this.transparent = true
+    this.color = new THREE.Color(0xa99a9d)
+    this.side = THREE.DoubleSide
 
   }
 
@@ -32,4 +29,4 @@ class SeaMaterial extends THREE.MeshStandardMaterial {
   }
 }
 
-export default SeaMaterial;
+export default MountainMaterial;

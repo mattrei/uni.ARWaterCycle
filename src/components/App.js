@@ -1,3 +1,4 @@
+//http://codepen.io/chribbe/full/19f4a710bd771da41bcc79b814341b8d
 global.THREE = require('three')
 
 import Scene from './Core/Scene';

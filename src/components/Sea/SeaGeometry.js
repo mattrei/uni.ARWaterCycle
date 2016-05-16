@@ -25,21 +25,12 @@ class SeaGeometry extends THREE.PlaneBufferGeometry {
 
     const height = 0.5
     const positions = this.attributes.position.array
-    //const colors = this.attributes.vertexColors.array
 
     for (let i = 0, j=0; i < positions.length; i++, j += 3) {
       positions[j + 1] = simplex.noise3D(positions[j+0]*0.5, positions[j+2]*0.5, time*0.1) * height
-      /*
-      const c = new THREE.Color(0xff00ff)
-      colors[j + 0] = c.r
-      colors[j + 1] = c.g
-      colors[j + 2] = c.b
-      */
     }
 
     this.attributes.position.needsUpdate = true
-    //this.attributes.vertexColors.needsUpdate = true
-
   }
 }
 

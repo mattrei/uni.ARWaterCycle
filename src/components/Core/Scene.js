@@ -42,6 +42,7 @@ class Scene extends THREE.Scene {
     this.objects = []
 
     this.createScene()
+    this.createLight()
     //this.createDemoText()
 
     //document.addEventListener('mousedown', (e) => this.onDocumentMouseDown(e), false);
@@ -63,6 +64,16 @@ class Scene extends THREE.Scene {
       SELECTED.scale.multiplyScalar(1.2)
 
     }
+  }
+
+  createLight() {
+
+    const dirLight = new THREE.DirectionalLight( 0xffffff, 1 );
+    				dirLight.color.setHSL( 0.1, 1, 0.95 );
+    				dirLight.position.set( -1, 1.75, 1 );
+    				//dirLight.position.multiplyScalar( 50 );
+    				this.add( dirLight );
+
   }
 
   /**
@@ -93,7 +104,7 @@ class Scene extends THREE.Scene {
 
     this.sea = new Sea()
     //this.markerRoot.add(this.sea)
-    //this.add(this.sea)
+    this.add(this.sea)
 
     this.steam = new Steam()
     //this.markerRoot.add(this.steam)

@@ -36,9 +36,15 @@ class SteamGeometry extends THREE.BufferGeometry {
       var h = randomInt(0, 45);
       var s = randomInt(60, 90);
       var color = new THREE.Color('hsl(' + h + ', ' + s + '%, 50%)');
+      color.setHSL((180+Math.random()*40)/360, 1.0, 0.5 + Math.random() * 0.2);
 
-      mover.setVelocity(new THREE.Vector3(random(-0.1, 0.1), 0, 0))
-      mover.setAcceleration(new THREE.Vector3(0, random(0.0001, 0.001), 0))
+      const vel = new THREE.Vector3(random(-0.01, 0.01), random(0.001, 0.01), random(-0.01, 0.01))
+      vel.divideScalar(10)
+      const accel = new THREE.Vector3(0, 0, 0)
+      accel.divideScalar(2)
+
+      mover.setVelocity(vel)
+      mover.setAcceleration(accel)
       mover.setSize(random(0.1, 1))
 
       this.particles.push(mover);

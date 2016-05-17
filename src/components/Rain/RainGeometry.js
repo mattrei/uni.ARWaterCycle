@@ -33,17 +33,18 @@ class RainGeometry extends THREE.BufferGeometry {
 
       const mover = new NewtonParticle()
 
+      mover.setPosition(this.getInitialPosition())
+
       var h = randomInt(0, 45);
       var s = randomInt(60, 90);
       var color = new THREE.Color('hsl(' + h + ', ' + s + '%, 50%)');
       color.setHSL((180+Math.random()*40)/360, 1.0, 0.5 + Math.random() * 0.2);
 
-      const vel = new THREE.Vector3(random(-0.01, 0.01), random(-0.1, -0.2), random(-0.01, 0.01))
-      vel.divideScalar(10)
-      const accel = new THREE.Vector3(0, 0.01, 0)
-      accel.divideScalar(2)
 
-      mover.setVelocity(vel)
+      const accel = new THREE.Vector3(0, -0.001, 0)
+      accel.divideScalar(10)
+
+      mover.setVelocity(this.getInitialVelocity())
       mover.setAcceleration(accel)
       mover.setSize(random(0.1, 1))
 
@@ -77,8 +78,17 @@ class RainGeometry extends THREE.BufferGeometry {
     this.attributes.customColor.needsUpdate = true;
   }
 
-  updateMover() {
+  getInitialPosition() {
+    return new THREE.Vector3(-random(2, 5), 5, random(-1, 1))
+  }
 
+  getInitialVelocity() {
+    const vel = new THREE.Vector3(random(-0.01, 0.01), random(-0.1, -0.2), random(-0.01, 0.01))
+    vel.divideScalar(10)
+    return vel
+  }
+
+  updateMover() {
 
      for (var i = 0; i < this.particles.length; i++) {
        var mover = this.particles[i];
@@ -94,8 +104,9 @@ class RainGeometry extends THREE.BufferGeometry {
          this.opacities[i] = mover.getAlpha()
          this.sizes[i] = mover.getSize()
 
-         if (mover.getPosition().y >= MAX_HEIGHT) {
-           mover.setActive(false)
+         if (mover.getPosition().y < 0) {
+           mover.setPosition(this.getInitialPosition())
+           mover.setVelocity(this.getInitialVelocity())
          }
        }
      }

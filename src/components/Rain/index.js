@@ -11,12 +11,12 @@ class Rain extends THREE.Points {
   /**
    * Constructor function
    */
-  constructor() {
-    super(new SteamGeometry(),new SteamMaterial({
-      wireframe: false
+  constructor(options) {
+    super(new RainGeometry(),new RainMaterial({
+      texture: options.texture
     }));
 
-    this.position.y = 5
+    //this.position.y = 5
   }
 
   /**

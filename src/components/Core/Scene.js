@@ -119,12 +119,18 @@ class Scene extends THREE.Scene {
 
     this.steam = new Steam()
     //this.markerRoot.add(this.steam)
-    //this.add(this.steam)
+    this.add(this.steam)
 
 
-    this.rain = new Rain()
-    //this.markerRoot.add(this.steam)
-    this.add(this.rain)
+    const loader = new THREE.ImageLoader()
+    loader.load('./imgs/raindrop.png', texture => {
+      console.log("loaded tex")
+      console.log(texture)
+
+      this.rain = new Rain({texture: texture})
+      //this.markerRoot.add(this.steam)
+      this.add(this.rain)
+    })
 
     this.cloud = new Cloud()
     //this.markerRoot.add(this.cloud)
@@ -195,7 +201,9 @@ class Scene extends THREE.Scene {
 
     this.cube.update ( this.clock.time)
     this.sea.update(this.clock.time)
+
     this.steam.update(this.clock.time)
+    this.rain.update(this.clock.time)
 
     this.cloud.update(this.clock.time)
 

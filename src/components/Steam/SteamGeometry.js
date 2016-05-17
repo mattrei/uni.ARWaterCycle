@@ -38,13 +38,9 @@ class SteamGeometry extends THREE.BufferGeometry {
       var color = new THREE.Color('hsl(' + h + ', ' + s + '%, 50%)');
       color.setHSL((180+Math.random()*40)/360, 1.0, 0.5 + Math.random() * 0.2);
 
-      const vel = new THREE.Vector3(random(-0.01, 0.01), random(0.001, 0.01), random(-0.01, 0.01))
-      vel.divideScalar(10)
-      const accel = new THREE.Vector3(0, 0, 0)
-      accel.divideScalar(2)
-
-      mover.setVelocity(vel)
-      mover.setAcceleration(accel)
+      mover.setPosition(this.getInitialPosition())
+      mover.setVelocity(this.getInitialVelocity())
+      mover.setAcceleration(this.getInitialAcceleration())
       mover.setSize(random(0.1, 1))
 
       this.particles.push(mover);
@@ -77,6 +73,22 @@ class SteamGeometry extends THREE.BufferGeometry {
     this.attributes.customColor.needsUpdate = true;
   }
 
+  getInitialPosition() {
+    return new THREE.Vector3(random(2, 5), 0, random(-1, 1))
+  }
+
+  getInitialVelocity() {
+    const vel = new THREE.Vector3(random(-0.01, 0.01), random(0.001, 0.01), random(-0.01, 0.01))
+    vel.divideScalar(10)
+    return vel
+  }
+
+  getInitialAcceleration() {
+    const accel = new THREE.Vector3(0, 0.01, 0)
+    accel.divideScalar(2)
+    return accel
+  }
+
   updateMover() {
 
 
@@ -95,7 +107,9 @@ class SteamGeometry extends THREE.BufferGeometry {
          this.sizes[i] = mover.getSize()
 
          if (mover.getPosition().y >= MAX_HEIGHT) {
-           mover.setActive(false)
+           mover.setPosition(this.getInitialPosition())
+           mover.setVelocity(this.getInitialVelocity())
+           mover.setAcceleration(this.getInitialAcceleration())
          }
        }
      }

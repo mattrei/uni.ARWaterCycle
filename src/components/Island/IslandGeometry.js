@@ -18,8 +18,6 @@ class IslandGeometry extends THREE.PlaneBufferGeometry {
     super(SIZE, SIZE, SIZE, SIZE)
     this.applyMatrix(new THREE.Matrix4().makeRotationX(-Math.PI / 2))
 
-    console.log(this.attributes.position.array)
-
     const zeroVector = new THREE.Vector3();
 
     const positions = this.attributes.position.array

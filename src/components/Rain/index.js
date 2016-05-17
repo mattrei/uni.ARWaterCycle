@@ -16,7 +16,7 @@ class Rain extends THREE.Points {
       texture: options.texture
     }));
 
-    //this.position.y = 5
+    this.position.x = -5
   }
 
   /**

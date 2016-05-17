@@ -5,7 +5,7 @@ const randomInt = require('random-int')
 
 import NewtonParticle from '../Helpers/NewtonParticle'
 
-const NUM_PARTICLES = 10
+const NUM_PARTICLES = 30
 const MAX_HEIGHT = 4
 
 /**
@@ -79,7 +79,7 @@ class RainGeometry extends THREE.BufferGeometry {
   }
 
   getInitialPosition() {
-    return new THREE.Vector3(-random(2, 5), 5, random(-1, 1))
+    return new THREE.Vector3(random(-2, 2), random(3, 5), random(-1, 1))
   }
 
   getInitialVelocity() {

@@ -4,7 +4,8 @@ const random = require('random-float')
 const randomInt = require('random-int')
 
 
-const SIZE = 7
+const SIZE_X = 10
+const SIZE_Y = 20
 const HEIGHT = 2
   /**
    * CubeGeometry class
@@ -15,7 +16,7 @@ class IslandGeometry extends THREE.PlaneBufferGeometry {
    * Constructor function
    */
   constructor() {
-    super(SIZE, SIZE, SIZE, SIZE)
+    super(SIZE_X, SIZE_Y, SIZE_X, SIZE_Y)
     this.applyMatrix(new THREE.Matrix4().makeRotationX(-Math.PI / 2))
 
     const zeroVector = new THREE.Vector3();

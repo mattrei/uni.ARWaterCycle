@@ -3,6 +3,9 @@ const simplex = new(require('simplex-noise'))
 const random = require('random-float')
 const randomInt = require('random-int')
 
+const SIZE_X = 10
+const SIZE_Y = 20
+
 /**
  * CubeGeometry class
  */
@@ -12,7 +15,7 @@ class SeaGeometry extends THREE.PlaneBufferGeometry {
    * Constructor function
    */
   constructor() {
-    super( 10, 5, 10, 5 );
+    super( SIZE_X, SIZE_Y, SIZE_X, SIZE_Y );
     this.applyMatrix(new THREE.Matrix4().makeRotationX(-Math.PI / 2))
 
   }

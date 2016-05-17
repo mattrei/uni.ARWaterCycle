@@ -31,7 +31,11 @@ class App {
     renderer.setSize(VIDEO_WIDHT, VIDEO_HEIGHT)
     container.appendChild(renderer.domElement);
 
-    const camera = new THREE.PerspectiveCamera(50, VIDEO_WIDHT / VIDEO_HEIGHT, 1, 1000)
+    const camera = new THREE.PerspectiveCamera(43, VIDEO_WIDHT / VIDEO_HEIGHT, 1, 2000)
+    //camera.lookAt(new THREE.Vector3(0,1,0))
+    //camera.rotateZ(Math.PI)
+
+    //const camera = new THREE.Camera()
       //camera.position.set(0, 0, -10)
       //camera.lookAt(new THREE.Vector3())
     camera.matrixAutoUpdate = false;
@@ -40,13 +44,11 @@ class App {
     var hdConstraints = {
       audio: false,
       video: {
-        mandatory: {
-          width: {
-            min: VIDEO_WIDHT  //960
-          },
-          height: {
-            min: VIDEP_HEIGHT  //720
-          }
+        width: {
+          min: VIDEO_WIDHT  //960
+        },
+        height: {
+          min: VIDEO_HEIGHT  //720
         },
         optional: [{
           facingMode: "environment"

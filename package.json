@@ -5,7 +5,6 @@
   "main": "src/index.js",
   "scripts": {
     "start": "budo src/index.js:build/bundle.js --dir ./public --live --open",
-    "start3": "budo src/index.js:build/bundle.js --live --open",
     "build": "browserify src/index.js | uglifyjs -c > build/bundle.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "deploy": "surge -p public"

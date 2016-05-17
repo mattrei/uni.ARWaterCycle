@@ -4,8 +4,8 @@ const random = require('random-float')
 const randomInt = require('random-int')
 
 
-const SIZE = 4
-const HEIGHT = 2
+const SIZE = 5
+const HEIGHT = 4
   /**
    * CubeGeometry class
    */
@@ -33,8 +33,8 @@ class MountainGeometry extends THREE.PlaneBufferGeometry {
         positions[j + 1],
         positions[j + 2])
 
-      const factor = (-vector.distanceTo(zeroVector) * 0.5) * HEIGHT
-      positions[j + 1] += factor //+ random(2, 5)//simplex.noise3D(positions[j+0]*0.5, positions[j+2]*0.5) * HEIGHT
+      const factor = (-vector.distanceTo(zeroVector) * 0.2) * HEIGHT
+      positions[j + 1] += factor  //+ random(2, 5)//simplex.noise3D(positions[j+0]*0.5, positions[j+2]*0.5) * HEIGHT
 
     }
 

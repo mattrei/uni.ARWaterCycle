@@ -75,15 +75,15 @@ class Scene extends THREE.Scene {
 
   createLight() {
 
+    const hemiLight = new THREE.HemisphereLight(0xffffff, 0xb3858c, 0.65);
+    this.add(hemiLight)
+
+
     const dirLight = new THREE.DirectionalLight( 0xffffff, 1 );
     dirLight.color.setHSL( 0.1, 1, 0.95 );
-    dirLight.position.set( SCENE_WIDTH, SCENE_HEIGHT, 1 );
-    				//dirLight.position.multiplyScalar( 50 );
-    				this.add( dirLight );
-
-
-    const hemiLight = new THREE.HemisphereLight(0xffffff, 0xb3858c, .65);
-    this.add(hemiLight)
+    dirLight.position.set( SCENE_WIDTH, -SCENE_HEIGHT, 1 );
+    //dirLight.position.multiplyScalar( 50 );
+    this.add( dirLight );
 
   }
 
@@ -106,33 +106,39 @@ class Scene extends THREE.Scene {
     this.markerRoot.visible = false
     this.add(this.markerRoot);
 
-    const root = this.markerRoot//this// this.markerRoot // this
+    const marker = this.markerRoot//this// this.markerRoot // this
+
+    const root = new THREE.Object3D()
+    marker.add(root)
+    //root.rotation.x = Math.PI
+    root.rotation.z = -Math.PI*0.5
+    root.rotation.y = -Math.PI*0.3
 
 
     this.cube = new Cube();
-    root.add(this.cube);
+//    root.add(this.cube);
 
     this.sea = new Sea()
     root.add(this.sea)
 
+
     this.steam = new Steam()
     root.add(this.steam)
+
 
     const loader = new THREE.ImageLoader()
     loader.load('./imgs/raindrop.png', texture => {
       this.rain = new Rain({texture: texture})
-      root.add(this.steam)
+      root.add(this.rain)
     })
 
     this.cloud = new Cloud()
     root.add(this.cloud)
-
-    this.cloud.position.x = SCENE_WIDTH
-    this.cloud.position.y = SCENE_HEIGHT
     //this.cloud.grow(0.1, 4)
 
     this.mountain = new Mountain()
     root.add(this.mountain)
+
 
     this.island = new Island()
     root.add(this.island)
@@ -188,8 +194,6 @@ class Scene extends THREE.Scene {
    */
   render() {
 
-    this.cube.rotation.x += 0.01;
-    this.cube.rotation.y += 0.02;
     this.updateScene()
     this.updateAR()
 
@@ -205,6 +209,9 @@ class Scene extends THREE.Scene {
   }
 
   updateAR() {
+    const MARKER_IDX = 0,
+      MARKER_WIDTH = 1// war 0
+
     if (!this.arController) return;
 
     this.arController.detectMarker(this.video);
@@ -213,7 +220,7 @@ class Scene extends THREE.Scene {
     var markerNum = this.arController.getMarkerNum();
     if (markerNum > 0) {
       if (this.markerRoot.visible === false) {
-        this.arController.getTransMatSquare(0 /* Marker index */ , 1 /* Marker width */ , this.markerRoot.markerMatrix);
+        this.arController.getTransMatSquare(MARKER_IDX /* Marker index */ , MARKER_WIDTH /* Marker width */ , this.markerRoot.markerMatrix);
       } else {
         this.arController.getTransMatSquareCont(0, 1, this.markerRoot.markerMatrix, this.markerRoot.markerMatrix);
       }
@@ -221,7 +228,6 @@ class Scene extends THREE.Scene {
     }
     // objects visible IIF there is a marker
     if (markerNum > 0) {
-      console.log("found" + markerNum)
       this.markerRoot.visible = true;
     } else {
       this.markerRoot.visible = false;

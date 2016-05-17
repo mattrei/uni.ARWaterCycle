@@ -203,7 +203,7 @@ class Scene extends THREE.Scene {
     this.sea.update(this.clock.time)
 
     this.steam.update(this.clock.time)
-    this.rain.update(this.clock.time)
+    if (this.rain) this.rain.update(this.clock.time)
 
     this.cloud.update(this.clock.time)
 

@@ -21,7 +21,7 @@ class App {
     const container = document.getElementById('container');
 
     const video = document.createElement('video');
-    //container.appendChild(video);
+    container.appendChild(video);
 
     // Renderer
     const renderer = new THREE.WebGLRenderer({

@@ -84,8 +84,8 @@ class SteamGeometry extends THREE.BufferGeometry {
   }
 
   getInitialAcceleration() {
-    const accel = new THREE.Vector3(0, 0.01, 0)
-    accel.divideScalar(2)
+    const accel = new THREE.Vector3(0, random(0.2, 0.4), 0)
+    accel.divideScalar(1000)
     return accel
   }
 

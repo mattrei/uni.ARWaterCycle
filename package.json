@@ -5,8 +5,10 @@
   "main": "src/index.js",
   "scripts": {
     "start": "budo src/index.js:build/bundle.js --dir ./public --live --open",
-    "build": "browserify src/index.js | uglifyjs -c > public/build/bundle.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start3": "budo src/index.js:build/bundle.js --live --open",
+    "build": "browserify src/index.js | uglifyjs -c > build/bundle.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "deploy": "surge -p public"
   },
   "keywords": [
     "budo",
@@ -32,6 +34,7 @@
     "babelify": "^7.2.0",
     "budo": "^8.0.3",
     "glslify": "^5.0.2",
+    "surge": "^0.18.0",
     "uglifyjs": "^2.4.10"
   },
   "dependencies": {

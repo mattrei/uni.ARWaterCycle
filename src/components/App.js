@@ -32,8 +32,8 @@ class App {
     container.appendChild(renderer.domElement);
 
     const camera = new THREE.PerspectiveCamera(50, VIDEO_WIDHT / VIDEO_HEIGHT, 1, 1000)
-    //camera.position.set(0, 0, -10)
-    //camera.lookAt(new THREE.Vector3())
+      //camera.position.set(0, 0, -10)
+      //camera.lookAt(new THREE.Vector3())
     camera.matrixAutoUpdate = false;
     //const controls = new OrbitControls(camera)
 
@@ -41,9 +41,16 @@ class App {
       audio: false,
       video: {
         mandatory: {
-          maxWidth: window.innerWidth,
-          maxHeight: window.innerHeight
-        }
+          width: {
+            min: VIDEO_WIDHT  //960
+          },
+          height: {
+            min: VIDEP_HEIGHT  //720
+          }
+        },
+        optional: [{
+          facingMode: "environment"
+        }]
       }
     };
 

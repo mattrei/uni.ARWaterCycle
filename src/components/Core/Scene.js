@@ -7,6 +7,7 @@ import Steam from '../Steam'
 import Cloud from '../Cloud'
 import Mountain from '../Mountain'
 import Island from '../Island'
+import Rain from '../Rain'
 
 /*
 import {
@@ -119,6 +120,11 @@ class Scene extends THREE.Scene {
     this.steam = new Steam()
     //this.markerRoot.add(this.steam)
     //this.add(this.steam)
+
+
+    this.rain = new Rain()
+    //this.markerRoot.add(this.steam)
+    this.add(this.rain)
 
     this.cloud = new Cloud()
     //this.markerRoot.add(this.cloud)

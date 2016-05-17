@@ -125,7 +125,7 @@ class Scene extends THREE.Scene {
     this.add(this.cloud)
     this.cloud.position.x = SCENE_WIDTH
     this.cloud.position.y = SCENE_HEIGHT
-    this.cloud.grow(0.1, 4)
+    //this.cloud.grow(0.1, 4)
 
     this.mountain = new Mountain()
     this.add(this.mountain)
@@ -191,6 +191,7 @@ class Scene extends THREE.Scene {
     this.sea.update(this.clock.time)
     this.steam.update(this.clock.time)
 
+    this.cloud.update(this.clock.time)
 
     //this.updateAR()
 

@@ -24,7 +24,7 @@ class CloudMaterial extends THREE.MeshStandardMaterial {
    * @param {number} time Time
    */
   update( time ) {
-
+    this.opacity = Math.sin(time*0.1)    
   }
 }
 

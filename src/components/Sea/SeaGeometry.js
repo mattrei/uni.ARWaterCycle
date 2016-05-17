@@ -26,7 +26,7 @@ class SeaGeometry extends THREE.PlaneBufferGeometry {
     const height = 0.5
     const positions = this.attributes.position.array
 
-    for (let i = 0, j=0; i < positions.length; i++, j += 3) {
+    for (let j=0; j < positions.length; j += 3) {
       positions[j + 1] = simplex.noise3D(positions[j+0]*0.5, positions[j+2]*0.5, time*0.1) * height
     }
 

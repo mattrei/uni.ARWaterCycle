@@ -20,12 +20,12 @@ class Cloud extends THREE.Mesh {
    * @param {number} time Time
    */
   update( time ) {
-    //this.material.update( time );
+    this.material.update( time );
+    this.geometry.update( time );
   }
 
   grow(factor, duration) {
 
-    
     const origScale = new THREE.Vector3()
     origScale.copy(this.scale)
 

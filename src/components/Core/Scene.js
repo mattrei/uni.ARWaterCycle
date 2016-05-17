@@ -6,6 +6,7 @@ import Sea from '../Sea'
 import Steam from '../Steam'
 import Cloud from '../Cloud'
 import Mountain from '../Mountain'
+import Island from '../Island'
 
 /*
 import {
@@ -79,6 +80,10 @@ class Scene extends THREE.Scene {
     				//dirLight.position.multiplyScalar( 50 );
     				this.add( dirLight );
 
+
+    const hemiLight = new THREE.HemisphereLight(0xffffff, 0xb3858c, .65);
+    this.add(hemiLight)
+
   }
 
   /**
@@ -113,7 +118,7 @@ class Scene extends THREE.Scene {
 
     this.steam = new Steam()
     //this.markerRoot.add(this.steam)
-    this.add(this.steam)
+    //this.add(this.steam)
 
     this.cloud = new Cloud()
     //this.markerRoot.add(this.cloud)
@@ -124,6 +129,9 @@ class Scene extends THREE.Scene {
 
     this.mountain = new Mountain()
     this.add(this.mountain)
+
+    this.island = new Island()
+    this.add(this.island)
 
     //this.objects.push(this.sea)
     //this.objects.push(this.steam)

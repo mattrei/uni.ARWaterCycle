@@ -14,7 +14,7 @@ class SeaMaterial extends THREE.ShaderMaterial {
     super( options );
 
     this.transparent = true
-
+    this.opacity = 0.9
     this.side = THREE.DoubleSide
 
     this.vertexShader = glslify( './shader/vert.glsl' );
@@ -24,7 +24,7 @@ class SeaMaterial extends THREE.ShaderMaterial {
       time: { type: 'f', value: 0.0 },
       height: { type: 'f', value: 1.0 },
       speed: { type: 'f', value: 1.0 },
-      color: { type: 'c', value: new THREE.Color( 0x00ffff ) }
+      color: { type: 'c', value: new THREE.Color( 0x6092c1 ) }
     }
   }
 

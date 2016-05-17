@@ -14,6 +14,8 @@ class Sea extends THREE.Mesh {
    */
   constructor() {
     super( new SeaGeometry(), new SeaMaterial({ wireframe: false }) );
+
+    this.position.x += 4
   }
 
   /**

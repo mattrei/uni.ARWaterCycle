@@ -1,10 +1,11 @@
 import THREE from 'three'
 
-import MountainGeometry from './MountainGeometry'
-import MountainMaterial from './MountainMaterial'
+import MountainGeometry from './IslandGeometry'
+import MountainMaterial from './IslandMaterial'
 
+const HEIGHT = 2
 
-class Mountain extends THREE.Mesh {
+class Island extends THREE.Mesh {
 
   /**
    * Constructor function
@@ -12,9 +13,8 @@ class Mountain extends THREE.Mesh {
   constructor() {
     super(new MountainGeometry(), new MountainMaterial({wireframe: false}))
 
-
-    this.position.x -= 5
-    this.position.y = 3
+    this.position.x -= 4
+    this.position.y += 1
   }
 
   /**
@@ -26,4 +26,4 @@ class Mountain extends THREE.Mesh {
   }
 }
 
-export default Mountain;
+export default Island;

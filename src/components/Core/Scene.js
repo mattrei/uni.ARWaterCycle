@@ -94,10 +94,10 @@ class Scene extends THREE.Scene {
 
 
     var gridHelper = new THREE.GridHelper( 10, 1);
-    this.add( gridHelper);
+    //this.add( gridHelper);
     var axisHelper = new THREE.AxisHelper( 50 );
-    this.add( axisHelper );
-    this.add(new THREE.CameraHelper(this.camera))
+    //this.add( axisHelper );
+    //this.add(new THREE.CameraHelper(this.camera))
 
     // create the marker Root
     this.markerRoot = new THREE.Object3D();
@@ -106,44 +106,36 @@ class Scene extends THREE.Scene {
     this.markerRoot.visible = false
     this.add(this.markerRoot);
 
+    const root = this.markerRoot//this// this.markerRoot // this
+
 
     this.cube = new Cube();
-    //this.markerRoot.add(this.cube);
-  //  this.add(this.cube)
-  //  this.cube.position.set(new THREE.Vector3(1, 1,1))
-
+    root.add(this.cube);
 
     this.sea = new Sea()
-    //this.markerRoot.add(this.sea)
-    this.add(this.sea)
+    root.add(this.sea)
 
     this.steam = new Steam()
-    //this.markerRoot.add(this.steam)
-    this.add(this.steam)
-
+    root.add(this.steam)
 
     const loader = new THREE.ImageLoader()
     loader.load('./imgs/raindrop.png', texture => {
-      console.log("loaded tex")
-      console.log(texture)
-
       this.rain = new Rain({texture: texture})
-      //this.markerRoot.add(this.steam)
-      this.add(this.rain)
+      root.add(this.steam)
     })
 
     this.cloud = new Cloud()
-    //this.markerRoot.add(this.cloud)
-    this.add(this.cloud)
+    root.add(this.cloud)
+
     this.cloud.position.x = SCENE_WIDTH
     this.cloud.position.y = SCENE_HEIGHT
     //this.cloud.grow(0.1, 4)
 
     this.mountain = new Mountain()
-    this.add(this.mountain)
+    root.add(this.mountain)
 
     this.island = new Island()
-    this.add(this.island)
+    root.add(this.island)
 
     //this.objects.push(this.sea)
     //this.objects.push(this.steam)
@@ -198,18 +190,18 @@ class Scene extends THREE.Scene {
 
     this.cube.rotation.x += 0.01;
     this.cube.rotation.y += 0.02;
-
-    this.cube.update ( this.clock.time)
-    this.sea.update(this.clock.time)
-
-    this.steam.update(this.clock.time)
-    if (this.rain) this.rain.update(this.clock.time)
-
-    this.cloud.update(this.clock.time)
-
-    //this.updateAR()
+    this.updateScene()
+    this.updateAR()
 
     this.renderer.render(this, this.camera)
+  }
+
+  updateScene() {
+    this.cube.update ( this.clock.time)
+    this.sea.update(this.clock.time)
+    this.steam.update(this.clock.time)
+    if (this.rain) this.rain.update(this.clock.time)
+    this.cloud.update(this.clock.time)
   }
 
   updateAR() {
@@ -229,6 +221,7 @@ class Scene extends THREE.Scene {
     }
     // objects visible IIF there is a marker
     if (markerNum > 0) {
+      console.log("found" + markerNum)
       this.markerRoot.visible = true;
     } else {
       this.markerRoot.visible = false;

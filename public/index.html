@@ -1,16 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-    <base href="/">
-    <link rel="stylesheet" type="text/css" href="./main.css">
-    <title>AR sample</title>
-  </head>
-  <body>
-    <div id="container"></div>
 
-    <script src="./build/bundle.js"></script>
-    <script src="./build/artoolkit.debug.js"></script>
-  </body>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+  <base href="/">
+  <link rel="stylesheet" type="text/css" href="./main.css">
+  <link href='https://fonts.googleapis.com/css?family=Playfair+Display:400,700,700italic' rel='stylesheet' type='text/css'>
+  <title>AR sample</title>
+</head>
+
+<body>
+  <div id="container">
+    <div class="world" id="world"></div>
+    <div class="hud" id="hud">
+      <div class="message message--instructions" id="instructions1">
+        <div class="title">Willkommen zum Wasserzyklus</div>
+        <div class="description">Hier erfährst du
+          <br/> so einiges...</div>
+
+
+          <div class="message--buttons">
+            <button id="continueButton" class="continue-button">Fortfahren</button>
+          </div>
+      </div>
+
+
+      <button id="replayButton" class="replay-button">Replay</button>
+    </div>
+  </div>
+
+  <script src="./build/bundle.js"></script>
+  <script src="./build/artoolkit.debug.js"></script>
+</body>
+
 </html>

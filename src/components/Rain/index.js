@@ -16,6 +16,8 @@ class Rain extends THREE.Points {
       texture: options.texture
     }));
 
+    this.isRaining = false
+
     this.position.x = -5
   }
 
@@ -24,12 +26,22 @@ class Rain extends THREE.Points {
    * @param {number} time Time
    */
   update(time) {
-    this.geometry.update(time)
-    this.material.update(time)
+    if (this.isRaining) {
+      this.geometry.update(time)
+      this.material.update(time)
+    }
   }
 
   getMaterial() {
     return this.material
+  }
+
+  setRaining(raining) {
+    this.isRaining = raining
+    this.geometry.setRaining(raining)
+  }
+  getRaining() {
+    return this.isRaining
   }
 }
 

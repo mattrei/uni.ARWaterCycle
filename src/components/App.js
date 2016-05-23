@@ -1,7 +1,8 @@
 //http://codepen.io/chribbe/full/19f4a710bd771da41bcc79b814341b8d
 global.THREE = require('three')
 
-import Scene from './Core/Scene';
+import Scene from './Core/Scene'
+import Storyline from './Core/Storyline'
 const OrbitControls = require('three-orbit-controls')(THREE)
 
 
@@ -18,9 +19,10 @@ class App {
    */
   static begin() {
 
-    const container = document.getElementById('container');
+    const container = document.getElementById('world');
 
     const video = document.createElement('video');
+    video.id = "bgvideo"
     container.appendChild(video);
 
     const renderer = new THREE.WebGLRenderer({
@@ -56,8 +58,9 @@ class App {
       }
     };
 
-    let arController = null
+    const storyline = new Storyline()
 
+    let arController = null
 
     navigator.getUserMedia(hdConstraints, stream => {
 
@@ -77,7 +80,8 @@ class App {
         var cameraMatrix = arController.getCameraMatrix();
         camera.projectionMatrix.elements.set(cameraMatrix);
 
-        const scene = new Scene(renderer, camera, arController, video);
+        const scene = new Scene(storyline, renderer, camera, arController, video);
+
 
       };
 

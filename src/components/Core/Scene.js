@@ -9,6 +9,8 @@ import Mountain from '../Mountain'
 import Island from '../Island'
 import Rain from '../Rain'
 
+import HUD from './HUD'
+
 /*
 import {
   textAlign,
@@ -33,8 +35,10 @@ class Scene extends THREE.Scene {
    * @param {Renderer} Renderer Renderer instance
    * @param {Camera}   Camera   Camera instance
    */
-  constructor(Renderer, Camera, arController, video) {
+  constructor(storyline, Renderer, Camera, arController, video) {
     super();
+
+    this.storyline = storyline
 
     this.raycaster = new THREE.Raycaster()
 
@@ -50,7 +54,6 @@ class Scene extends THREE.Scene {
 
     this.createScene()
     this.createLight()
-    //this.createDemoText()
 
     //document.addEventListener('mousedown', (e) => this.onDocumentMouseDown(e), false);
   }
@@ -128,7 +131,7 @@ class Scene extends THREE.Scene {
 
     const loader = new THREE.ImageLoader()
     loader.load('./imgs/raindrop.png', texture => {
-      this.rain = new Rain({texture: texture})
+      this.rain = this.storyline.getRain() //new Rain({texture: texture})
       root.add(this.rain)
     })
 
@@ -150,44 +153,6 @@ class Scene extends THREE.Scene {
     this.raf = raf(::this.render).start();
   }
 
-
-  createDemoText() {
-
-    var loader = new THREE.FontLoader();
-    const fontName = 'helvetiker',
-      fontWeight = 'regular'
-
-    const text = 'CLICKED ME!',
-      size = 0.5
-
-    loader.load('../fonts/' + fontName + '_' + fontWeight + '.typeface.js', (font) => {
-
-      /*
-          const textGeo = new THREE.TextGeometry( text, {
-        					font: font,
-        					size: size
-        				});
-        				//textGeo.computeBoundingBox();
-        				//textGeo.computeVertexNormals();
-
-          const material = new THREE.MeshNormalMaterial()
-
-          const textMesh = new THREE.Mesh( textGeo, material );
-
-          this.markerRoot.add(textMesh)
-          */
-
-/*
-      var text = new Text2D("RIGHT", {
-        align: new THREE.Vector2(-1, 0),
-        font: '30px Arial',
-        fillStyle: '#000000',
-        antialias: true
-      })
-      this.markerRoot.add(text)
-      */
-    })
-  }
 
   /**
    * Render function

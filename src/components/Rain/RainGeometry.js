@@ -88,6 +88,15 @@ class RainGeometry extends THREE.BufferGeometry {
     return vel
   }
 
+  setRaining(raining) {
+
+    for (var i = 0; i < this.particles.length; i++) {
+      var mover = this.particles[i];
+      mover.setActive(raining)
+      mover.setPosition(this.getInitialPosition())
+    }
+  }
+
   updateMover() {
 
      for (var i = 0; i < this.particles.length; i++) {
